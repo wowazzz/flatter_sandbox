@@ -19,23 +19,27 @@ class _StudentsPage extends State<StudentsPage> {
       appBar: AppBar(
         title: const Text('Students'),
       ),
-      body: Container(
-        child: ListView.builder(
-          itemCount: students.length,
-          itemBuilder: (
-            BuildContext context,
-            int i,
-          ) {
-            return Container(
+      body: ListView.builder(
+        itemCount: students.length,
+        itemBuilder: (
+          BuildContext context,
+          int i,
+        ) {
+          return Container(
+            margin: const EdgeInsets.all(12),
+            decoration: const BoxDecoration(
               color: Colors.white,
-              //decoration: const BoxDecoration(boxShadow)
-              height: 40,
-              child: Text(
-                  students[i].name
-              ),
-            );
-          }
-        ),
+              boxShadow: [BoxShadow(blurRadius: 3)],
+            ),
+            height: 40,
+            child: Row(
+              children: [
+                Text(students[i].name),
+                Text(': ${students[i].mark}'),
+              ],
+            ),
+          );
+        }
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => setState(
