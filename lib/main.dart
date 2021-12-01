@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/students',
       routes: {
         '/students': (_) => const StudentsPage(),
-        '/students/crud': (_) => const StudentFormPage(),
+        //'/student/crud': (_) => const StudentFormPage(),
       },
       //home: const MyHomePage(title: 'Flutter Demo Home Page test'),
     );

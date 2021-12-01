@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // Import from project
 import 'package:test/models/main.dart';
+import 'package:test/screens/main.dart';
 
 class StudentsPage extends StatefulWidget {
   const StudentsPage({Key? key}) : super(key: key);
@@ -12,32 +13,33 @@ class StudentsPage extends StatefulWidget {
 class _StudentsPage extends State<StudentsPage> {
   List<StudentModel> students = [];
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        actions: [
-          GestureDetector(
-          )
-        ],
         title: const Text('Students'),
       ),
       body: Container(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          var s = await Navigator.of(context).pushNamed(
-            '/students/crud',
-            arguments: StudentModel(name: 'Old name', mark: 5),
-            ) as StudentModel;
-          
-          print(s.name);
-        },
+        onPressed: () => setState(
+          () async {
+            try {
+              students.add(await Navigator.push(
+                context, 
+                MaterialPageRoute(
+                  builder: (_) => StudentFormPage(
+                    student: StudentModel(),
+                  ),
+                ),
+              ));
+              print(students.length);
+            } catch(_) {}
+          },
+        ),
         child: const Icon(
           Icons.add_box_rounded,
           size: 24,
-        )
+        ),
       ),
     );
   }
