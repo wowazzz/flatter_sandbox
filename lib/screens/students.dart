@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 // Import from project
 import 'package:test/models/main.dart';
+import 'package:test/screens/store.dart';
 import 'package:test/screens/student_edit.dart';
 
 class StudentsPage extends StatefulWidget {
@@ -11,14 +14,47 @@ class StudentsPage extends StatefulWidget {
 }
 
 class _StudentsPage extends State<StudentsPage> {
-  List<StudentModel> students = [];
+  List<StudentModel> _students = [];
+  
+  List<StudentModel> get students => _students;
+  set students(List<StudentModel> _) {
+    studentsSave(_);
+    _students = _;
+  }
+
+  @override
+  initState() {
+    super.initState();
+    studentsLoad().then((value) => setState(() => _students = value));
+  }
+
+  showAction(context, StudentModel student) {
+    showModalBottomSheet(
+      builder: (_) {
+        return CupertinoActionSheet(
+          actions: [
+            CupertinoActionSheetAction(onPressed: () {}, child: Text('Edit')),
+            CupertinoActionSheetAction(onPressed: () {
+              students.remove(student);
+              setState(() {
+                
+              });
+              Navigator.of(context).pop();
+            }, child: Text('Remove')),
+          ]
+        );
+      },
+     context: context);
+  }
 
   @override
   Widget build(BuildContext context) {
     // print(students);
-    return Scaffold(
+    return FutureBuilder<int>(
+      future: getStudentsCount(),
+      builder: (_, AsyncSnapshot snapshot) => Scaffold(
       appBar: AppBar(
-        title: const Text('Students'),
+        title: Text('Students ${snapshot.data}'),
       ),
       body: ListView.builder(
         itemCount: students.length,
@@ -38,7 +74,7 @@ class _StudentsPage extends State<StudentsPage> {
                 Text(students[i].name),
                 Text(': ${students[i].mark}'),
                 RawMaterialButton(
-                  onPressed: () async {
+                  onPressed: () => showAction(context, students[i]), /* async {
                     try {
                       var _ = await Navigator.push(
                         context,
@@ -55,7 +91,7 @@ class _StudentsPage extends State<StudentsPage> {
                         //students[i].mark = student.mark;
                       });
                     } catch (_) {}
-                  },
+                  }*/
                   child: const Text('Edit'),
                 ),
               ],
@@ -85,6 +121,7 @@ class _StudentsPage extends State<StudentsPage> {
           Icons.add_box_rounded,
           size: 24,
         ),
+      ),
       ),
     );
   }
