@@ -37,6 +37,27 @@ class _StudentsPage extends State<StudentsPage> {
               children: [
                 Text(students[i].name),
                 Text(': ${students[i].mark}'),
+                RawMaterialButton(
+                  onPressed: () async {
+                    try {
+                      var student = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => StudentFormPage(
+                            student: StudentModel(name: students[i].name, mark: students[i].mark),
+                          ),
+                        ),
+                      ) as StudentModel;
+
+                      print(student.name);
+                      setState(() {
+                        students[i].name = student.name;
+                        students[i].mark = student.mark;
+                      });
+                    } catch (_) {}
+                  },
+                  child: const Text('Edit'),
+                ),
               ],
             ),
           );

@@ -25,6 +25,9 @@ class _StudentFormPage extends State<StudentFormPage> {
   @override
   initState() {
     super.initState();
+
+    name = widget.student.name;
+    mark = widget.student.mark;
 /*
     name.addListener(() {
       //print(name.value.text);
