@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // Import from project
 import 'package:test/models/main.dart';
-import 'package:test/screens/main.dart';
+import 'package:test/screens/student_edit.dart';
 
 class StudentsPage extends StatefulWidget {
   const StudentsPage({Key? key}) : super(key: key);
@@ -15,6 +15,7 @@ class _StudentsPage extends State<StudentsPage> {
 
   @override
   Widget build(BuildContext context) {
+    // print(students);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Students'),
@@ -42,21 +43,23 @@ class _StudentsPage extends State<StudentsPage> {
         }
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => setState(
-          () async {
-            try {
-              students.add(await Navigator.push(
-                context, 
-                MaterialPageRoute(
-                  builder: (_) => StudentFormPage(
-                    student: StudentModel(),
-                  ),
+        onPressed: () async {
+          try {
+            var student = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => StudentFormPage(
+                  student: StudentModel(),
                 ),
-              ));
-              print(students.length);
-            } catch(_) {}
-          },
-        ),
+              ),
+            ) as StudentModel;
+
+            print(student.name);
+            setState(() {
+              students.add(student);
+            });
+          } catch (_) {}
+        },
         child: const Icon(
           Icons.add_box_rounded,
           size: 24,
