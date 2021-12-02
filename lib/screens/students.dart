@@ -33,14 +33,29 @@ class _StudentsPage extends State<StudentsPage> {
       builder: (_) {
         return CupertinoActionSheet(
           actions: [
-            CupertinoActionSheetAction(onPressed: () {}, child: Text('Edit')),
+            CupertinoActionSheetAction(onPressed: () async {
+              try {
+                var _ = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => StudentFormPage(
+                      student: student,
+                    ),
+                  ),
+                ) as StudentModel;
+                Navigator.of(context).pop();
+                setState(() {
+                });
+              } catch (_) {}
+            }, child: const Text('Edit')),
             CupertinoActionSheetAction(onPressed: () {
               students.remove(student);
+              studentsSave(students);
               setState(() {
                 
               });
               Navigator.of(context).pop();
-            }, child: Text('Remove')),
+            }, child: const Text('Remove')),
           ]
         );
       },
@@ -74,24 +89,7 @@ class _StudentsPage extends State<StudentsPage> {
                 Text(students[i].name),
                 Text(': ${students[i].mark}'),
                 RawMaterialButton(
-                  onPressed: () => showAction(context, students[i]), /* async {
-                    try {
-                      var _ = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => StudentFormPage(
-                            student: students[i],
-                          ),
-                        ),
-                      ) as StudentModel;
-
-                      print(students[i].mark);
-                      setState(() {
-                        //students[i].name = student.name;
-                        //students[i].mark = student.mark;
-                      });
-                    } catch (_) {}
-                  }*/
+                  onPressed: () => showAction(context, students[i]), 
                   child: const Text('Edit'),
                 ),
               ],
@@ -113,7 +111,7 @@ class _StudentsPage extends State<StudentsPage> {
 
             print(student.name);
             setState(() {
-              students.add(student);
+              students = [...students,student];
             });
           } catch (_) {}
         },
