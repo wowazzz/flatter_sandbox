@@ -19,15 +19,11 @@ class _StudentFormPage extends State<StudentFormPage> {
 
 //  TextEditingController name = TextEditingController();
 //  TextEditingController mark = TextEditingController();
-  String name = 'default';
-  int mark = 5;
 
   @override
   initState() {
     super.initState();
 
-    name = widget.student.name;
-    mark = widget.student.mark;
 /*
     name.addListener(() {
       //print(name.value.text);
@@ -49,6 +45,8 @@ class _StudentFormPage extends State<StudentFormPage> {
   @override
   Widget build(BuildContext context) {
     //print(widget.student.mark);
+    String name = widget.student.name;
+    int mark = widget.student.mark;
       
     return Scaffold(
       appBar: AppBar(
@@ -93,24 +91,21 @@ class _StudentFormPage extends State<StudentFormPage> {
               TextFormField(
                 initialValue: name,
                 onChanged: (_) => setState(() {
-                  name = _;
+                  widget.student.name = _;
                 }),
               ),
               const Separator(),
               TextFormField(
                 initialValue: '$mark',
                 onChanged: (_) => setState(() {
-                mark = int.parse(_);
+                widget.student.mark = int.parse(_);
               })),
               const Separator(),
               MaterialButton(
                 child: const Text('Save'),
                 onPressed: () {
                   Navigator.of(context).pop(
-                    StudentModel(
-                      name: name,
-                      mark: mark
-                    ),
+                    widget.student,
                   );
                 },
               ),

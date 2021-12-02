@@ -40,19 +40,19 @@ class _StudentsPage extends State<StudentsPage> {
                 RawMaterialButton(
                   onPressed: () async {
                     try {
-                      var student = await Navigator.push(
+                      var _ = await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (_) => StudentFormPage(
-                            student: StudentModel(name: students[i].name, mark: students[i].mark),
+                            student: students[i],
                           ),
                         ),
                       ) as StudentModel;
 
-                      print(student.name);
+                      print(students[i].mark);
                       setState(() {
-                        students[i].name = student.name;
-                        students[i].mark = student.mark;
+                        //students[i].name = student.name;
+                        //students[i].mark = student.mark;
                       });
                     } catch (_) {}
                   },
