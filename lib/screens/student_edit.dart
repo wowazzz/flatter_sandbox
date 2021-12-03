@@ -16,7 +16,6 @@ class StudentFormPage extends StatefulWidget {
 }
 
 class _StudentFormPage extends State<StudentFormPage> {
-
 //  TextEditingController name = TextEditingController();
 //  TextEditingController mark = TextEditingController();
 
@@ -45,32 +44,29 @@ class _StudentFormPage extends State<StudentFormPage> {
   @override
   Widget build(BuildContext context) {
     //print(widget.student.mark);
-    String name = widget.student.name;
-    int mark = widget.student.mark;
-      
+    //String name = widget.student.name;
+    //int mark = widget.student.mark;
+
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text('student Form'),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop(
-                StudentModel(
-                  name:'Jane',
-                  mark: 5,
+          automaticallyImplyLeading: false,
+          title: const Text('student Form'),
+          actions: [
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop(
+                  // return null if we just close it
+                  null,
+                );
+              },
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Icon(
+                  Icons.close,
                 ),
-              );
-            },
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Icon(
-                Icons.close,
               ),
             ),
-          ),
-        ]
-      ),
+          ]),
       body: Container(
         margin: const EdgeInsets.all(24),
         padding: const EdgeInsets.all(24),
@@ -86,31 +82,31 @@ class _StudentFormPage extends State<StudentFormPage> {
           ],
         ),
         child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextFormField(
-                initialValue: name,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextFormField(
+              initialValue: widget.student.name,
+              onChanged: (_) => setState(() {
+                widget.student.name = _;
+              }),
+            ),
+            const Separator(),
+            TextFormField(
+                initialValue: '${widget.student.mark}',
                 onChanged: (_) => setState(() {
-                  widget.student.name = _;
-                }),
-              ),
-              const Separator(),
-              TextFormField(
-                initialValue: '$mark',
-                onChanged: (_) => setState(() {
-                widget.student.mark = int.tryParse(_) ?? 0;
-              })),
-              const Separator(),
-              MaterialButton(
-                child: const Text('Save'),
-                onPressed: () {
-                  Navigator.of(context).pop(
-                    widget.student,
-                  );
-                },
-              ),
-            ],
-          ),
+                      widget.student.mark = int.tryParse(_) ?? 0;
+                    })),
+            const Separator(),
+            MaterialButton(
+              child: const Text('Save'),
+              onPressed: () {
+                Navigator.of(context).pop(
+                  widget.student,
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
