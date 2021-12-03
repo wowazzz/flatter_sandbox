@@ -98,7 +98,7 @@ class _StudentFormPage extends State<StudentFormPage> {
               TextFormField(
                 initialValue: '$mark',
                 onChanged: (_) => setState(() {
-                widget.student.mark = int.parse(_);
+                widget.student.mark = int.tryParse(_) ?? 0;
               })),
               const Separator(),
               MaterialButton(
